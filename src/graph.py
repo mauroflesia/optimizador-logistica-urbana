@@ -14,7 +14,7 @@ class RedVial:
             ValueError: Cuando la interseccion ya existe en la red.
         """
         if interseccion.id in self.intersecciones:
-            raise ValueError("La interseccion ya existe")
+            raise ValueError( f"La interseccion con ID {interseccion.id} ya existe en la red")
         self.intersecciones[interseccion.id] = interseccion
         self.adyacencias[interseccion.id] = []
 
