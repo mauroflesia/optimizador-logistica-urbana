@@ -3,7 +3,7 @@ from .models import Interseccion, Tramo
 class RedVial:
     def __init__(self) -> None:
         self.intersecciones: dict[str, Interseccion] = {}
-        self.adyacencias: dict[str, list[Tramo]] = {}
+        self._adyacencias: dict[str, list[Tramo]] = {}
 
     def agregar_interseccion(self, interseccion: Interseccion)-> None:
         """Agrega una interseccion a la red.
@@ -16,7 +16,7 @@ class RedVial:
         if interseccion.id in self.intersecciones:
             raise ValueError( f"La interseccion con ID {interseccion.id} ya existe en la red")
         self.intersecciones[interseccion.id] = interseccion
-        self.adyacencias[interseccion.id] = []
+        self._adyacencias[interseccion.id] = []
 
     def conectar_intersecciones(self, tramo: Tramo) -> None:
         """Conecta 2 intersecciones siempre que se respete el sentido de conduccion.
@@ -31,9 +31,9 @@ class RedVial:
             raise ValueError("El ID de origen o el ID de destino no estan en la red")
         if tramo.distancia <= 0 or tramo.tiempo_estimado <= 0:
             raise ValueError("El tiempo estimado y la distancia deben ser mayores a cero") 
-        self.adyacencias[tramo.origen_id].append(tramo)
+        self._adyacencias[tramo.origen_id].append(tramo)
 
-    def obtener_vecinos(self, interseccion_id: str) -> list[Tramo]:
+    def obtener_tramos_desde(self, interseccion_id: str) -> list[Tramo]:
         """Devuelve la lista de tramos asociada a determinada interseccion.
 
         Args: 
@@ -45,4 +45,4 @@ class RedVial:
         """
         if interseccion_id not in self.intersecciones:
             raise ValueError(f"La interseccion {interseccion_id} no existe en la red")
-        return self.adyacencias[interseccion_id].copy()
+        return self._adyacencias[interseccion_id].copy()
