@@ -30,3 +30,11 @@ def test_conectar_intersecciones_exitosamente():
     assert len(tramos) == 1
     assert tramos[0] == prueba_tramo
     assert len(prueba_red.obtener_tramos_desde(prueba_interseccion_2.id)) == 0
+
+def test_conectar_intersecciones_id_inexistente_error():
+    prueba_red = RedVial()
+    prueba_interseccion_1 = Interseccion("E1", "Corrientes", (42.45, 78.31))
+    prueba_red.agregar_interseccion(prueba_interseccion_1)
+    prueba_tramo = Tramo(prueba_interseccion_1.id, "E_INEXISTENTE" , 100, 4.11)
+    with pytest.raises(ValueError, match="El ID de origen"):
+        prueba_red.conectar_intersecciones(prueba_tramo)
