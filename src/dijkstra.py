@@ -3,6 +3,10 @@ from .graph import RedVial
 from .models import Ruta
 
 def calcular_ruta_minima(red: RedVial, origen_id: str, destino_id: str, criterio: str = "distancia") -> Ruta | None:
+    if origen_id not in red.intersecciones or destino_id not in red.intersecciones:
+        raise ValueError("El origen o el destino no existen en la red")
+    if criterio not in ("distancia", "tiempo"):
+        raise ValueError(f"El criterio '{criterio}' no es valido")
     cola_prioridad = [(0.0, origen_id)]
     distancias = {origen_id: 0.0}
     predecesores = {origen_id: None}
