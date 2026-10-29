@@ -34,3 +34,14 @@ def test_calcular_ruta_minima_elige_camino_optimo_segun_criterio():
     ruta_tiempo = calcular_ruta_minima(prueba_red, "A", "C", criterio="tiempo")
     assert ruta_tiempo.costo_total == 20.0
     assert ruta_tiempo.camino == ["A", "B", "C"]
+
+def test_calcular_ruta_minima_destino_inalcanzable_retorna_none():
+    prueba_red = RedVial()
+    prueba_interseccion_1 = Interseccion("A", "Rivadavia", (13.2, 43.3))
+    prueba_interseccion_2 = Interseccion("B", "San Martin", (56.4, 11.2))
+    prueba_red.agregar_interseccion(prueba_interseccion_1)
+    prueba_red.agregar_interseccion(prueba_interseccion_2)
+    prueba_tramo_1 = Tramo(prueba_interseccion_1.id, prueba_interseccion_2.id, 8.0, 10.0)
+    prueba_red.conectar_intersecciones(prueba_tramo_1)
+    resultado = calcular_ruta_minima(prueba_red, "B", "A", criterio="distancia")
+    assert resultado is None

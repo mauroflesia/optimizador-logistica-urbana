@@ -2,7 +2,7 @@ import heapq
 from .graph import RedVial
 from .models import Ruta
 
-def calcular_ruta_minima(red: RedVial, origen_id: str, destino_id: str, criterio: str = "distancia") -> Ruta:
+def calcular_ruta_minima(red: RedVial, origen_id: str, destino_id: str, criterio: str = "distancia") -> Ruta | None:
     cola_prioridad = [(0.0, origen_id)]
     distancias = {origen_id: 0.0}
     predecesores = {origen_id: None}
@@ -20,6 +20,8 @@ def calcular_ruta_minima(red: RedVial, origen_id: str, destino_id: str, criterio
                 distancias[vecino_id] = nuevo_costo
                 predecesores[vecino_id] = nodo_actual
                 heapq.heappush(cola_prioridad, (nuevo_costo, vecino_id))
+    if destino_id not in distancias:
+        return None
     camino = []
     actual = destino_id
     while actual is not None:
