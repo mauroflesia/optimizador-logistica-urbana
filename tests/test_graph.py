@@ -38,3 +38,13 @@ def test_conectar_intersecciones_id_inexistente_error():
     prueba_tramo = Tramo(prueba_interseccion_1.id, "E_INEXISTENTE" , 100, 4.11)
     with pytest.raises(ValueError, match="El ID de origen"):
         prueba_red.conectar_intersecciones(prueba_tramo)
+
+def test_conectar_intersecciones_tiempo_o_distancia_negativos():
+    prueba_red = RedVial()
+    prueba_interseccion_1 = Interseccion("E1", "Corrientes", (42.45, 78.31))
+    prueba_interseccion_2 = Interseccion("K1", "Rivadavia", (11.45, 81.45))
+    prueba_red.agregar_interseccion(prueba_interseccion_1)
+    prueba_red.agregar_interseccion(prueba_interseccion_2)
+    prueba_tramo = Tramo(prueba_interseccion_1.id, prueba_interseccion_2.id, -10, 5.0 )
+    with pytest.raises(ValueError, match="deben ser mayores a cero"):
+        prueba_red.conectar_intersecciones(prueba_tramo)
