@@ -76,5 +76,3 @@ def test_optimizar_ruta_sin_pedidos():
     assert plan.pedidos_entregados == []
     assert plan.camino_completo == [vehiculo_1.deposito_id]
     assert plan.costo_total == 0.0
-
-
