@@ -66,6 +66,15 @@ def test_optimizar_ruta_respeta_capacidad_maxima_vehiculo():
     assert plan.pedidos_entregados == ["P1"]
     assert plan.camino_completo == ["DEP", "C1", "DEP"]
     assert plan.costo_total == 25.0
-    
+
+def test_optimizar_ruta_sin_pedidos():
+    red = RedVial()
+    interseccion_1 = Interseccion("DEP", "Moreno", (31.44, 42.46))
+    red.agregar_interseccion(interseccion_1)
+    vehiculo_1 = Vehiculo("DEP", 600.0)
+    plan = optimizar_ruta_entregas(red,vehiculo_1, [], criterio="distancia")
+    assert plan.pedidos_entregados == []
+    assert plan.camino_completo == [vehiculo_1.deposito_id]
+    assert plan.costo_total == 0.0
 
 
