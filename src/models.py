@@ -34,3 +34,9 @@ class Vehiculo:
     def __post_init__(self) -> None:
         if self.carga_maxima <= 0:
             raise ValueError("La carga maxima del vehiculo debe ser mayor a cero")
+
+@dataclass
+class PlanEntrega:
+    pedidos_entregados: list[str]
+    camino_completo: list[str]
+    costo_total: float
