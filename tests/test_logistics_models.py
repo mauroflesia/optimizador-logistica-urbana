@@ -12,6 +12,7 @@ def test_instanciar_pedido_y_vehiculo_correctamente():
 def test_crear_pedido_peso_invalido_error():
     with pytest.raises(ValueError, match="El peso del pedido debe ser"):
         Pedido("P1", "D1", -5.0)
+
 def test_crear_vehiculo_carga_invalida_error():
     with pytest.raises(ValueError, match="carga maxima"):
         Vehiculo("D1", -34)
